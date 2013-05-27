@@ -36,7 +36,6 @@ for ii in **/test/**/*Test(|Base|Case|Suite|Unit).java; do
 
     sed -i -e "s/import junit.framework.TestSuite;/\/\/ FIXME include in TestSuite @RunWith(Suite.class)@Suite.SuiteClasses(...)/" -e "s/public[ \t]\+static[ \t]\+TestSuite[ \t]suite\(\)/public static Object suite() \/\/ FIXME TestSuite/" $ii
 
-
     ### Annotate @Test/@Before/@After only if they are not present in the class already.
 
     if [[ `grep -m 1 -c "@Test" ${ii}` -eq 0 ]]; then
@@ -59,14 +58,14 @@ for ii in **/test/**/*Test(|Base|Case|Suite|Unit).java; do
     # sed -i ':a;N;$!ba;s/[ \t]*@After\n[ \t]*@After/   @After/g' $ii
 
     if [[ `grep -m 1 -c "@Test" $ii` -eq 1 && `grep -m 1 -c "import org.junit.Test;" $ii` -eq 0 ]]; then
-        sed -i "0,/import .*;/ s/import .*;/&\nimport org.junit.Test;/1" $ii
+        sed -i "0,/package .*;/ s/package .*;/&\n\nimport org.junit.Test;/1" $ii
     fi
 
     if [[ `grep -m 1 -c "@After" $ii` -eq 1 && `grep -m 1 -c "import org.junit.After;" $ii` -eq 0 ]]; then
-        sed -i "0,/import .*;/ s/import .*;/&\nimport org.junit.After;/1" $ii
+        sed -i "0,/package .*;/ s/package .*;/&\nimport org.junit.After;/1" $ii
     fi
 
     if [[ `grep -m 1 -c "@Before" $ii` -eq 1 && `grep -m 1 -c "import org.junit.Before;" $ii` -eq 0 ]]; then
-        sed -i "0,/import .*;/ s/import .*;/&\nimport org.junit.Before;/1" $ii
+        sed -i "0,/package .*;/ s/package .*;/&\nimport org.junit.Before;/1" $ii
     fi
 done
