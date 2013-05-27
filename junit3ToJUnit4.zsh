@@ -34,6 +34,9 @@ for ii in **/test/**/*Test(|Base|Case|Suite|Unit).java; do
         fi
     fi
 
+    sed -i -e "s/import junit.framework.TestSuite;/\/\/ FIXME include in TestSuite @RunWith(Suite.class)@Suite.SuiteClasses(...)/" -e "s/public[ \t]\+static[ \t]\+TestSuite[ \t]suite\(\)/public static Object suite() \/\/ FIXME TestSuite/" $ii
+
+
     ### Annotate @Test/@Before/@After only if they are not present in the class already.
 
     if [[ `grep -m 1 -c "@Test" ${ii}` -eq 0 ]]; then
