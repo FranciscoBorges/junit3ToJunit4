@@ -49,7 +49,11 @@ for ii in **/test/**/*Test(|Base|Case|Suite|Unit).java; do
         sed -i -e "s/^[ \t]*protected[ \t]\+void[ \t]\+tearDown\(\)/   @After\n   public void tearDown/" $ii
     fi
 
-    ### Fix the any imports to use the new package name
+    # Fix AssertionFailedError exception handling --> java.lang.AssertionError
+    sed -i -e "s/import[ \t]\+junit.framework.AssertionFailedError;//" \
+        -e "s/\(junit\.framework\.\)\?AssertionFailedError/AssertionError/g" $ii
+
+    ### Fix the any imports left to the new package name
     sed -i -e "s/import junit.framework./import org.junit./" $ii
 
     # Should you need to remove duplicates...
