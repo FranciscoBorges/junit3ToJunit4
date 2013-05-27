@@ -55,15 +55,15 @@ for ii in **/test/**/*Test(|Base|Case|Suite|Unit).java; do
     # sed -i ':a;N;$!ba;s/[ \t]*@Before\n*[ \t]*@Before/   @Before/g' $ii
     # sed -i ':a;N;$!ba;s/[ \t]*@After\n[ \t]*@After/   @After/g' $ii
 
-    if [[ `grep -m 1 -c "@Test" $ii` -eq 1 && `grep -m 1 -c "import org.junit.Test" $ii` -eq 0 ]]; then
+    if [[ `grep -m 1 -c "@Test" $ii` -eq 1 && `grep -m 1 -c "import org.junit.Test;" $ii` -eq 0 ]]; then
         sed -i "0,/import .*;/ s/import .*;/&\nimport org.junit.Test;/1" $ii
     fi
 
-    if [[ `grep -m 1 -c "@After" $ii` -eq 1 && `grep -m 1 -c "import org.junit.After" $ii` -eq 0 ]]; then
+    if [[ `grep -m 1 -c "@After" $ii` -eq 1 && `grep -m 1 -c "import org.junit.After;" $ii` -eq 0 ]]; then
         sed -i "0,/import .*;/ s/import .*;/&\nimport org.junit.After;/1" $ii
     fi
 
-    if [[ `grep -m 1 -c "@Before" $ii` -eq 1 && `grep -m 1 -c "import org.junit.Before" $ii` -eq 0 ]]; then
+    if [[ `grep -m 1 -c "@Before" $ii` -eq 1 && `grep -m 1 -c "import org.junit.Before;" $ii` -eq 0 ]]; then
         sed -i "0,/import .*;/ s/import .*;/&\nimport org.junit.Before;/1" $ii
     fi
 done
