@@ -6,7 +6,7 @@
 # junit.framework.TestSuite.addTestSuite(clazz);
 #
 
-for ii in **/test/**/*Test(|Base|Case|Suite).java; do
+for ii in **/test/**/*Test(|Base|Case|Suite|Unit).java; do
 
     if [[ `grep -m 1 -c "extends *TestCase" ${ii}` -eq 1 ]]; then
         # 'extends TestCase' is problematic because the class (and its sub-classes)
@@ -17,8 +17,8 @@ for ii in **/test/**/*Test(|Base|Case|Suite).java; do
         sed -i -e "s/[ \t]\+extends *TestCase/ extends Assert/" $ii
 
         # But now there is no super.(tearDown|setUp)
-        sed -i -r -e "N; s/[ \t]*super\.setUp..;//" $ii
-        sed -i -r -e "N; s/[ \t]*super\.tearDown..;//" $ii
+        sed -i -r -e "N; s/[ \t]*super\.setUp\(\);//" $ii
+        sed -i -r -e "N; s/[ \t]*super\.tearDown\(\);//" $ii
 
         # nor is there a constructor taking a String argument
         sed -i -r -e "N; s/[ \t]*super\([[:alpha:]]*\);//" $ii
