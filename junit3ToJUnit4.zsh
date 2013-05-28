@@ -43,10 +43,10 @@ for ii in **/test/**/*Test(|Base|Case|Suite|Unit).java; do
     fi
 
     if [[ `grep -m 1 -c "@Before" ${ii}` -eq 0 ]]; then
-        sed -i -e "s/^[ \t]*protected[ \t]\+void[ \t]\+setUp\(\)/   @Before\n   public void setUp/" $ii
+        sed -i -r -e "s/^[ \t]*(protected|public)[ \t]+void[ \t]+setUp\(\)/   @Before\n   public void setUp()/" $ii
     fi
     if [[ `grep -m 1 -c "@After" ${ii}` -eq 0 ]]; then
-        sed -i -e "s/^[ \t]*protected[ \t]\+void[ \t]\+tearDown\(\)/   @After\n   public void tearDown/" $ii
+        sed -i -r -e "s/^[ \t]*(protected|public)[ \t]+void[ \t]+tearDown\(\)/   @After\n   public void tearDown()/" $ii
     fi
 
     # Fix AssertionFailedError exception handling --> java.lang.AssertionError
