@@ -27,8 +27,8 @@ for ii in **/test/**/*Test(|Base|Case|Suite|Unit).java; do
         sed -i -r ':a;N;$!ba;s/[ \t]*@Override\n[ \t]*(protected|public) void setUp/   protected void setUp/g' $ii
         sed -i -r ':a;N;$!ba;s/[ \t]*@Override\n[ \t]*(protected|public) void tearDown/   protected void tearDown/g' $ii
 
-        if [[ `grep -E -m 1 -c "import (junit.framework|org.junit).Assert" $ii` -eq 0 ]]; then
-            sed -i -e "s/import junit.framework.TestCase;/import org.junit.Assert;/" $ii
+        if [[ `grep -E -m 1 -c "import (junit.framework|org.junit).Assert;" $ii` -eq 0 ]]; then
+            sed -i -e "s/import[ \t]\+junit.framework.TestCase;/import org.junit.Assert;/" $ii
         else
             sed -i -e "s/import junit.framework.TestCase;//" $ii
         fi
